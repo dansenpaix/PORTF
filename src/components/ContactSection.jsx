@@ -45,9 +45,9 @@ export default function ContactSection() {
     {
       id: 'x',
       name: 'X (Twitter)',
-      value: '@dansenpaix',
-      copyValue: 'https://x.com/dansenpaix',
-      link: 'https://x.com/dansenpaix',
+      value: '@',
+      copyValue: 'https://x.com/',
+      link: 'https://x.com',
       icon: Twitter,
     },
     {

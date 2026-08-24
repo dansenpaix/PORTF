@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-[var(--border-color)] bg-[var(--bg-primary)] py-12 text-xs font-mono text-[var(--text-muted)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        
+
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center justify-center font-pixel text-[var(--accent)] text-[10px]">
             D

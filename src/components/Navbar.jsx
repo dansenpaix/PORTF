@@ -52,7 +52,7 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
 
   const socialLinks = [
     { name: 'GitHub', icon: Github, href: 'https://github.com/dansenpaix' },
-    { name: 'X (Twitter)', icon: Twitter, href: 'https://x.com/dansenpaix' },
+    { name: 'X (Twitter)', icon: Twitter, href: 'https://x.com/' },
     { name: 'Discord', icon: MessageSquare, href: 'https://discord.com/users/dansenpaix' },
     { name: 'Telegram', icon: Send, href: 'https://t.me/dan_senpaii' },
     { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/ariyibi-daniel-850833238/' },
