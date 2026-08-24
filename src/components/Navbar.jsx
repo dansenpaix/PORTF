@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Popover, PopoverTrigger, PopoverContent } from './ui/Popover';
+
 import { 
   Code2, 
   BookOpen, 
@@ -23,7 +25,7 @@ import {
 export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme, customPalette = { accent: '#a855f7', bg: '#0f0715' }, setCustomPalette }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,85 +134,82 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
 
           <div className="flex items-center gap-2 sm:gap-3">
             
-            <div className="relative">
-              <button
-                onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
-                className="p-2 sm:px-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all flex items-center gap-1.5 sm:gap-2 text-xs font-mono"
-                title="Change Color Theme"
-              >
-                <Palette className="w-4 h-4 text-[var(--accent)]" />
-                <span className="capitalize hidden sm:inline">{currentTheme}</span>
-              </button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className="p-2 sm:px-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all flex items-center gap-1.5 sm:gap-2 text-xs font-mono"
+                  title="Change Color Theme"
+                >
+                  <Palette className="w-4 h-4 text-[var(--accent)]" />
+                  <span className="capitalize hidden sm:inline">{currentTheme}</span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-64 space-y-3">
+                <div className="px-1 text-[10px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 font-bold tracking-wider">
+                  SELECT THEME PALETTE
+                </div>
 
-              {themeDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 max-w-[90vw] p-3 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xl backdrop-blur-xl z-50 space-y-3">
-                  <div className="px-1 text-[10px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 font-bold tracking-wider">
-                    SELECT THEME PALETTE
-                  </div>
+                <div className="space-y-1">
+                  {themes.map((t) => {
+                    const Icon = t.icon;
+                    return (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setTheme(t.id);
+                        }}
+                        className={`w-full px-3 py-2 rounded-xl text-left text-xs font-mono flex items-center gap-2 transition-colors ${
+                          currentTheme === t.id
+                            ? 'text-[var(--accent)] font-bold bg-[var(--accent)]/15 border border-[var(--accent)]/30'
+                            : 'text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-[var(--bg-card-hover)]'
+                        }`}
+                      >
+                        <Icon className="w-3.5 h-3.5" />
+                        <span>{t.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
 
-                  <div className="space-y-1">
-                    {themes.map((t) => {
-                      const Icon = t.icon;
-                      return (
+                {currentTheme === 'custom' && (
+                  <div className="pt-2 border-t border-[var(--border-color)] space-y-2.5">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
+                      <span className="flex items-center gap-1 font-bold">
+                        <Pipette className="w-3 h-3 text-[var(--accent)]" />
+                        CUSTOM PALETTE PICKER
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-1.5 p-1.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                      {presetSwatches.map((swatch) => (
                         <button
-                          key={t.id}
-                          onClick={() => {
-                            setTheme(t.id);
-                          }}
-                          className={`w-full px-3 py-2 rounded-xl text-left text-xs font-mono flex items-center gap-2 transition-colors ${
-                            currentTheme === t.id
-                              ? 'text-[var(--accent)] font-bold bg-[var(--accent)]/15 border border-[var(--accent)]/30'
-                              : 'text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-[var(--bg-card-hover)]'
-                          }`}
-                        >
-                          <Icon className="w-3.5 h-3.5" />
-                          <span>{t.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                          key={swatch.name}
+                          onClick={() => setCustomPalette && setCustomPalette({ accent: swatch.accent, bg: swatch.bg })}
+                          className="w-6 h-6 rounded-full border border-slate-700 transition-transform hover:scale-110 flex items-center justify-center"
+                          style={{ backgroundColor: swatch.accent }}
+                          title={`${swatch.name} Palette`}
+                        />
+                      ))}
+                    </div>
 
-                  {currentTheme === 'custom' && (
-                    <div className="pt-2 border-t border-[var(--border-color)] space-y-2.5">
-                      <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
-                        <span className="flex items-center gap-1 font-bold">
-                          <Pipette className="w-3 h-3 text-[var(--accent)]" />
-                          CUSTOM PALETTE PICKER
+                    <div className="flex items-center justify-between p-2 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono">
+                      <span className="text-[var(--text-body)]">Accent Color:</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={customPalette?.accent || '#a855f7'}
+                          onChange={(e) => setCustomPalette && setCustomPalette({ ...customPalette, accent: e.target.value })}
+                          className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent"
+                        />
+                        <span className="text-[10px] font-mono text-[var(--accent)] uppercase font-bold">
+                          {customPalette?.accent || '#a855f7'}
                         </span>
                       </div>
-
-                      <div className="flex items-center justify-between gap-1.5 p-1.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
-                        {presetSwatches.map((swatch) => (
-                          <button
-                            key={swatch.name}
-                            onClick={() => setCustomPalette && setCustomPalette({ accent: swatch.accent, bg: swatch.bg })}
-                            className="w-6 h-6 rounded-full border border-slate-700 transition-transform hover:scale-110 flex items-center justify-center"
-                            style={{ backgroundColor: swatch.accent }}
-                            title={`${swatch.name} Palette`}
-                          />
-                        ))}
-                      </div>
-
-                      <div className="flex items-center justify-between p-2 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono">
-                        <span className="text-[var(--text-body)]">Accent Color:</span>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="color"
-                            value={customPalette?.accent || '#a855f7'}
-                            onChange={(e) => setCustomPalette && setCustomPalette({ ...customPalette, accent: e.target.value })}
-                            className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent"
-                          />
-                          <span className="text-[10px] font-mono text-[var(--accent)] uppercase font-bold">
-                            {customPalette?.accent || '#a855f7'}
-                          </span>
-                        </div>
-                      </div>
                     </div>
-                  )}
-
-                </div>
-              )}
-            </div>
+                  </div>
+                )}
+              </PopoverContent>
+            </Popover>
 
             <div className="hidden lg:flex items-center gap-1.5">
               {socialLinks.map((social) => {

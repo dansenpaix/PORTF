@@ -15,10 +15,11 @@ import {
   Bookmark,
   CheckCircle2
 } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/Tabs';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './ui/Accordion';
 
 export default function ManhwaHub() {
   const [selectedGenre, setSelectedGenre] = useState('all');
-  const [activeTabScriptDemo, setActiveTabScriptDemo] = useState('localized');
 
   const genres = [
     { id: 'all', label: 'All Genres' },
@@ -81,8 +82,8 @@ export default function ManhwaHub() {
     rawLiteral: `Raw Literal Text:\n"If I gather the Qi inside my Dantian to 100%, then the sword technique of Mount Hua Sect will reach the Realm of Plum Blossoms. Look at this, junior!"`,
     localizedText: `Dansenpaix Localized Adaptation:\n"Once the Qi inside my Dantian reaches full resonance, Mount Hua's legendary sword art blooms. Watch closely, kid—this is how a true master strikes!"`,
     qaNotes: [
-      { topic: 'Speech Register', note: 'Changed "junior" to "kid" to match the arrogant, experienced veteran tone of the protagonist in combat.' },
-      { topic: 'Pacing & Panel Fit', note: 'Replaced clumsy literal phrasing "reach the Realm of Plum Blossoms" with "Mount Hua\'s legendary sword art blooms" for fluid balloon fitting.' },
+      { topic: 'Speech Register Adaptation', note: 'Changed "junior" to "kid" to match the arrogant, experienced veteran tone of the protagonist in combat.' },
+      { topic: 'Pacing & Panel Fit', note: 'Replaced clumsy literal phrasing "reach the Realm of Plum Blossoms" with "Mount Hua\'s legendary sword art blooms" for fluid bubble fitting.' },
       { topic: 'Terminology Rules', note: 'Retained "Qi" and "Dantian" (standard genre terms) instead of over-translating to generic "magic energy" or "lower stomach".' }
     ]
   };
@@ -280,75 +281,82 @@ export default function ManhwaHub() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="theme-card p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
           
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
-            <div>
-              <span className="text-[11px] font-mono text-[var(--accent)] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                <Zap className="w-4 h-4" /> INTERACTIVE WORKFLOW DEMO
-              </span>
-              <h3 className="font-pixel text-lg sm:text-xl text-[var(--text-heading)] mt-1">
-                SCRIPT ADAPTATION & QA INSPECTOR
-              </h3>
-              <p className="text-xs font-mono text-[var(--text-body)]">{scriptDemo.panelContext}</p>
-            </div>
-
-            {/* Toggle Switch */}
-            <div className="flex items-center p-1 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
-              <button
-                onClick={() => setActiveTabScriptDemo('raw')}
-                className={`px-4 py-2 rounded-lg text-xs font-mono transition-all ${
-                  activeTabScriptDemo === 'raw'
-                    ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40'
-                    : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                }`}
-              >
-                RAW LITERAL
-              </button>
-              <button
-                onClick={() => setActiveTabScriptDemo('localized')}
-                className={`px-4 py-2 rounded-lg text-xs font-mono transition-all ${
-                  activeTabScriptDemo === 'localized'
-                    ? 'bg-[var(--accent)] text-slate-950 font-bold'
-                    : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                }`}
-              >
-                DANSENPAIX LOCALIZED
-              </button>
-            </div>
-          </div>
-
-          {/* Side by side display */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            {/* Left: Script Panel text display */}
-            <div className="lg:col-span-6 p-6 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)] space-y-3">
-              <div className="flex justify-between items-center text-xs font-mono text-[var(--text-muted)]">
-                <span>PANEL DIALOGUE SPEECH BUBBLE</span>
-                <span className="text-[var(--accent)]">{activeTabScriptDemo === 'localized' ? '✓ POLISHED' : '⚠️ UNEDITED'}</span>
+          <Tabs defaultValue="localized" className="w-full space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[var(--border-color)]">
+              <div>
+                <span className="text-[11px] font-mono text-[var(--accent)] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <Zap className="w-4 h-4" /> INTERACTIVE WORKFLOW DEMO
+                </span>
+                <h3 className="font-pixel text-lg sm:text-xl text-[var(--text-heading)] mt-1">
+                  SCRIPT ADAPTATION & QA INSPECTOR
+                </h3>
+                <p className="text-xs font-mono text-[var(--text-body)]">{scriptDemo.panelContext}</p>
               </div>
-              <pre className="font-mono text-sm sm:text-base text-[var(--text-heading)] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
-                {activeTabScriptDemo === 'localized' ? scriptDemo.localizedText : scriptDemo.rawLiteral}
-              </pre>
+
+              {/* Tabs Switch */}
+              <TabsList>
+                <TabsTrigger value="raw">RAW LITERAL</TabsTrigger>
+                <TabsTrigger value="localized">DANSENPAIX LOCALIZED</TabsTrigger>
+              </TabsList>
             </div>
 
-            {/* Right: QA Editorial Breakdown Notes */}
-            <div className="lg:col-span-6 space-y-3">
-              <h4 className="font-mono text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
-                EDITORIAL QA BREAKDOWN & DECISION LOG:
-              </h4>
-
-              <div className="space-y-2">
-                {scriptDemo.qaNotes.map((note, idx) => (
-                  <div key={idx} className="p-3.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] space-y-1">
-                    <span className="text-xs font-mono text-[var(--accent)] font-semibold block">
-                      [{idx + 1}] {note.topic}
-                    </span>
-                    <p className="text-xs text-[var(--text-body)] font-sans">{note.note}</p>
+            {/* Content Display */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              
+              {/* Left: Script Panel text display */}
+              <div className="lg:col-span-6 space-y-3">
+                <TabsContent value="raw" className="mt-0">
+                  <div className="p-6 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)] space-y-3">
+                    <div className="flex justify-between items-center text-xs font-mono text-[var(--text-muted)]">
+                      <span>PANEL DIALOGUE SPEECH BUBBLE</span>
+                      <span className="text-amber-400">⚠️ UNEDITED</span>
+                    </div>
+                    <pre className="font-mono text-sm sm:text-base text-[var(--text-heading)] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+                      {scriptDemo.rawLiteral}
+                    </pre>
                   </div>
-                ))}
-              </div>
-            </div>
+                </TabsContent>
 
-          </div>
+                <TabsContent value="localized" className="mt-0">
+                  <div className="p-6 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)] space-y-3">
+                    <div className="flex justify-between items-center text-xs font-mono text-[var(--text-muted)]">
+                      <span>PANEL DIALOGUE SPEECH BUBBLE</span>
+                      <span className="text-[var(--accent)]">✓ POLISHED</span>
+                    </div>
+                    <pre className="font-mono text-sm sm:text-base text-[var(--text-heading)] whitespace-pre-wrap leading-relaxed p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+                      {scriptDemo.localizedText}
+                    </pre>
+                  </div>
+                </TabsContent>
+              </div>
+
+              {/* Right: QA Editorial Accordion Breakdown */}
+              <div className="lg:col-span-6 space-y-3">
+                <h4 className="font-mono text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
+                  EDITORIAL QA BREAKDOWN & DECISION LOG:
+                </h4>
+
+                <Accordion type="single" collapsible className="w-full space-y-2">
+                  {scriptDemo.qaNotes.map((note, idx) => (
+                    <AccordionItem 
+                      key={idx} 
+                      value={`item-${idx}`} 
+                      className="border border-[var(--border-color)] bg-[var(--bg-primary)] rounded-xl px-4 overflow-hidden"
+                    >
+                      <AccordionTrigger className="text-xs hover:no-underline font-mono py-3">
+                        [{idx + 1}] {note.topic}
+                      </AccordionTrigger>
+                      <AccordionContent className="font-sans text-xs text-[var(--text-body)] pt-1 pb-3">
+                        {note.note}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+
+            </div>
+          </Tabs>
+
         </div>
       </section>
 

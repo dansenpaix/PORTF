@@ -11,6 +11,8 @@ import {
   Check, 
   ExternalLink
 } from 'lucide-react';
+import { toast } from 'sonner';
+
 
 export default function ContactSection() {
   const [copiedItem, setCopiedItem] = useState(null);
@@ -79,12 +81,14 @@ export default function ContactSection() {
   const handleCopy = (value, id) => {
     navigator.clipboard.writeText(value);
     setCopiedItem(id);
+    toast.success(`Copied ${id} to clipboard!`);
     setTimeout(() => setCopiedItem(null), 2000);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
+    toast.success("Transmission sent! Daniel will check his priority inbox.");
     setTimeout(() => {
       setFormSubmitted(false);
       setFormData({ name: '', email: '', message: '' });

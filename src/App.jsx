@@ -5,6 +5,8 @@ import DeveloperHub from './components/DeveloperHub';
 import ManhwaHub from './components/ManhwaHub';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import { Toaster } from 'sonner';
+
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false);
@@ -113,6 +115,19 @@ export default function App() {
         </div>
       )}
 
+      <Toaster 
+        position="bottom-right" 
+        toastOptions={{
+          style: {
+            background: 'var(--bg-card)',
+            color: 'var(--text-heading)',
+            borderColor: 'var(--border-color)',
+            fontFamily: '"Fira Code", monospace',
+            fontSize: '12px',
+          }
+        }} 
+      />
     </div>
+
   );
 }
