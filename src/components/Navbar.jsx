@@ -15,10 +15,12 @@ import {
   Moon,
   Palette,
   Flame,
-  Zap
+  Zap,
+  Sliders,
+  Pipette
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme }) {
+export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme, customPalette = { accent: '#a855f7', bg: '#0f0715' }, setCustomPalette }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
@@ -36,6 +38,16 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
     { id: 'light', label: 'Clean Slate (Light)', icon: Sun, color: 'bg-[#f8fafc] text-[#4f46e5]' },
     { id: 'crimson', label: 'Cyber Crimson (Red)', icon: Flame, color: 'bg-[#12070a] text-[#ff2a5f]' },
     { id: 'emerald', label: 'Matrix Emerald (Green)', icon: Zap, color: 'bg-[#06140e] text-[#10b981]' },
+    { id: 'custom', label: 'Custom Palette (Color Picker)', icon: Sliders, color: 'bg-[#0f0715] text-[#a855f7]' },
+  ];
+
+  const presetSwatches = [
+    { name: 'Purple', accent: '#a855f7', bg: '#0f0715' },
+    { name: 'Cyan', accent: '#06b6d4', bg: '#041318' },
+    { name: 'Pink', accent: '#ec4899', bg: '#160611' },
+    { name: 'Amber', accent: '#f59e0b', bg: '#141004' },
+    { name: 'Orange', accent: '#f97316', bg: '#180b05' },
+    { name: 'Lime', accent: '#84cc16', bg: '#0b1404' },
   ];
 
   const socialLinks = [
@@ -135,30 +147,74 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
               </button>
 
               {themeDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 py-2 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xl backdrop-blur-xl z-50">
-                  <div className="px-3 py-1 text-[10px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)] mb-1">
+                <div className="absolute right-0 mt-2 w-64 p-3 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xl backdrop-blur-xl z-50 space-y-3">
+                  <div className="px-1 text-[10px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 font-bold tracking-wider">
                     SELECT THEME PALETTE
                   </div>
-                  {themes.map((t) => {
-                    const Icon = t.icon;
-                    return (
-                      <button
-                        key={t.id}
-                        onClick={() => {
-                          setTheme(t.id);
-                          setThemeDropdownOpen(false);
-                        }}
-                        className={`w-full px-3 py-2 text-left text-xs font-mono flex items-center gap-2 transition-colors ${
-                          currentTheme === t.id
-                            ? 'text-[var(--accent)] font-bold bg-[var(--accent)]/10'
-                            : 'text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-[var(--bg-card-hover)]'
-                        }`}
-                      >
-                        <Icon className="w-3.5 h-3.5" />
-                        <span>{t.label}</span>
-                      </button>
-                    );
-                  })}
+
+                  <div className="space-y-1">
+                    {themes.map((t) => {
+                      const Icon = t.icon;
+                      return (
+                        <button
+                          key={t.id}
+                          onClick={() => {
+                            setTheme(t.id);
+                          }}
+                          className={`w-full px-3 py-2 rounded-xl text-left text-xs font-mono flex items-center gap-2 transition-colors ${
+                            currentTheme === t.id
+                              ? 'text-[var(--accent)] font-bold bg-[var(--accent)]/15 border border-[var(--accent)]/30'
+                              : 'text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-[var(--bg-card-hover)]'
+                          }`}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                          <span>{t.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Custom Palette Customizer Controls */}
+                  {currentTheme === 'custom' && (
+                    <div className="pt-2 border-t border-[var(--border-color)] space-y-2.5">
+                      <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
+                        <span className="flex items-center gap-1 font-bold">
+                          <Pipette className="w-3 h-3 text-[var(--accent)]" />
+                          CUSTOM PALETTE PICKER
+                        </span>
+                      </div>
+
+                      {/* Preset Swatches */}
+                      <div className="flex items-center justify-between gap-1.5 p-1.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                        {presetSwatches.map((swatch) => (
+                          <button
+                            key={swatch.name}
+                            onClick={() => setCustomPalette && setCustomPalette({ accent: swatch.accent, bg: swatch.bg })}
+                            className="w-6 h-6 rounded-full border border-slate-700 transition-transform hover:scale-110 flex items-center justify-center"
+                            style={{ backgroundColor: swatch.accent }}
+                            title={`${swatch.name} Palette`}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Accent Color Input */}
+                      <div className="flex items-center justify-between p-2 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono">
+                        <span className="text-[var(--text-body)]">Accent Color:</span>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="color"
+                            value={customPalette?.accent || '#a855f7'}
+                            onChange={(e) => setCustomPalette && setCustomPalette({ ...customPalette, accent: e.target.value })}
+                            className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent"
+                          />
+                          <span className="text-[10px] font-mono text-[var(--accent)] uppercase font-bold">
+                            {customPalette?.accent || '#a855f7'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               )}
             </div>
@@ -188,8 +244,9 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
           <div className="md:hidden flex items-center gap-2">
             <button
               onClick={() => {
-                const nextTheme = currentTheme === 'dark' ? 'light' : currentTheme === 'light' ? 'crimson' : currentTheme === 'crimson' ? 'emerald' : 'dark';
-                setTheme(nextTheme);
+                const themeOrder = ['dark', 'light', 'crimson', 'emerald', 'custom'];
+                const nextIndex = (themeOrder.indexOf(currentTheme) + 1) % themeOrder.length;
+                setTheme(themeOrder[nextIndex]);
               }}
               className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--accent)]"
               title="Cycle Theme"

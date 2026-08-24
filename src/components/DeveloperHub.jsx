@@ -26,10 +26,53 @@ import {
   Wind
 } from 'lucide-react';
 
+import blinkImg from '../image/blink.png';
+import chaincrafterImg from '../image/chaincrafter.png';
+import estateryImg from '../image/estatery.png';
+import fostrumImg from '../image/fostrum.png';
+import jollyshaifsImg from '../image/jollyshaifs.png';
+import mavelTechImg from '../image/mavel tech.png';
+import pumptrollImg from '../image/pumptroll.png';
+import rozerrImg from '../image/rozerr.png';
+import ukranianBrideImg from '../image/ukranianbride.png';
+
 export default function DeveloperHub({ onSwitchToManhwa }) {
   const [copiedLink, setCopiedLink] = useState(null);
 
   const projects = [
+    {
+      id: 'fostrum',
+      title: 'Fostrum',
+      tagline: 'Collaborative Project Platform',
+      description: 'Co-engineered digital platform bringing together streamlined product presentation, interactive showcase, and high-performance design.',
+      tags: ['Collaborative', 'React', 'Tailwind CSS', 'Next-Gen UX'],
+      url: 'https://www.fostrum.xyz/#about',
+      image: fostrumImg,
+      category: 'Co-Built Platform',
+      featured: true,
+    },
+    {
+      id: 'jolly-shaifs',
+      title: 'Jolly Shaifs',
+      tagline: 'Interactive Modern Web App',
+      description: 'Dynamic web solution with expressive UI, seamless user interaction, responsive layouts, and modern frontend architecture.',
+      tags: ['React', 'Vite', 'Tailwind CSS', 'Web Design'],
+      url: 'https://jolly-shaifs.netlify.app/',
+      image: jollyshaifsImg,
+      category: 'Web App',
+      featured: false,
+    },
+    {
+      id: 'mavel-tech',
+      title: 'Mavel Tech',
+      tagline: 'Tech Architecture & Developer Platform',
+      description: 'Sleek, high-efficiency web platform built for high responsiveness, structured navigation, and clean technical presentation.',
+      tags: ['React', 'Tailwind CSS', 'Web Development', 'Tech Suite'],
+      url: 'https://mavel-tech.netlify.app',
+      image: mavelTechImg,
+      category: 'Tech Platform',
+      featured: false,
+    },
     {
       id: 'rozerr',
       title: 'Rozerr',
@@ -37,9 +80,9 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       description: 'Dynamic web solution crafted with high-performance responsive UI, modular architecture, and sleek design system.',
       tags: ['React', 'Vite', 'Tailwind CSS', 'Web Architecture'],
       url: 'https://rozerr.netlify.app',
-      image: '/images/rozerr.png',
+      image: rozerrImg,
       category: 'Web App',
-      featured: true,
+      featured: false,
     },
     {
       id: 'blinkstore',
@@ -48,9 +91,9 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       description: 'Revolutionary Web3 e-commerce hub powered by Solana Blinks/Actions. Enables instant on-chain transactions directly from social feeds & URLs.',
       tags: ['Solana Web3', 'Blinks / Actions', 'React', 'Tailwind CSS', 'Rust Integration'],
       url: 'https://blink-store.netlify.app',
-      image: '/images/blinkstore.png',
+      image: blinkImg,
       category: 'Web3 / Solana',
-      featured: true,
+      featured: false,
     },
     {
       id: 'pumptroll',
@@ -59,7 +102,7 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       description: 'Engaging crypto-themed application with real-time analytics, dynamic visual components, and seamless Web3 wallet state tracking.',
       tags: ['JavaScript', 'Tailwind CSS', 'Web3 UI', 'REST APIs'],
       url: 'https://pumptrolll.netlify.app',
-      image: '/images/pumptroll.png',
+      image: pumptrollImg,
       category: 'Web3 App',
       featured: false,
     },
@@ -70,9 +113,9 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       description: 'Comprehensive utility suite for building, testing, and visualizing smart contract interactions with intuitive developer interface.',
       tags: ['Web3.js', 'Solana', 'TypeScript', 'Tailwind CSS', 'Ecosystem Tools'],
       url: 'https://chaincrafter.netlify.app',
-      image: '/images/chaincrafter.png',
+      image: chaincrafterImg,
       category: 'Dev Tool',
-      featured: true,
+      featured: false,
     },
     {
       id: 'verified-hearts',
@@ -81,7 +124,7 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       description: 'Clean, empathetic web app built for transparent advocacy, real-time updates, and community verification workflows.',
       tags: ['React', 'CSS3', 'Node.js', 'Responsive Design'],
       url: 'https://ukranian-hk.vercel.app',
-      image: '/images/verified_hearts.png',
+      image: ukranianBrideImg,
       category: 'Web Platform',
       featured: false,
     },
@@ -93,19 +136,8 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
       tags: ['React', 'Tailwind CSS', 'REST API', 'JavaScript', 'MERN Stack'],
       url: 'https://slem-propereti-5t50dz3fs-ddanny16s-projects.vercel.app',
       mirrorUrl: 'https://slem-propereti-fe-five.vercel.app',
-      image: '/images/estattery.png',
+      image: estateryImg,
       category: 'Full-Stack Web',
-      featured: true,
-    },
-    {
-      id: 'fostrum',
-      title: 'Fostrum',
-      tagline: 'Collaborative Project Platform',
-      description: 'Co-engineered digital platform bringing together streamlined product presentation, interactive showcase, and high-performance design.',
-      tags: ['Collaborative', 'React', 'Tailwind CSS', 'Next-Gen UX'],
-      url: 'https://www.fostrum.xyz/#about',
-      image: '/images/fostrum.png',
-      category: 'Co-Built Platform',
       featured: false,
     }
   ];

@@ -9,7 +9,11 @@ import Footer from './components/Footer';
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false);
   const [activeTab, setActiveTab] = useState('dev'); // 'dev' | 'manhwa'
-  const [theme, setTheme] = useState('dark'); // 'dark' | 'light' | 'crimson' | 'emerald'
+  const [theme, setTheme] = useState('dark'); // 'dark' | 'light' | 'crimson' | 'emerald' | 'custom'
+  const [customPalette, setCustomPalette] = useState({
+    accent: '#a855f7',
+    bg: '#0f0715'
+  });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Handle Mouse Spotlight Effect (Brittany Chiang style)
@@ -26,12 +30,49 @@ export default function App() {
       case 'light': return 'theme-light';
       case 'crimson': return 'theme-crimson';
       case 'emerald': return 'theme-emerald';
+      case 'custom': return 'theme-custom';
       default: return '';
     }
   };
 
+  const getCustomStyle = () => {
+    if (theme !== 'custom') return {};
+    
+    const accent = customPalette.accent || '#a855f7';
+    const bg = customPalette.bg || '#0f0715';
+    
+    const hexToRgba = (hex, alpha = 1) => {
+      let c = hex.replace('#', '');
+      if (c.length === 3) c = c.split('').map(x => x + x).join('');
+      const num = parseInt(c, 16);
+      if (isNaN(num)) return `rgba(168, 85, 247, ${alpha})`;
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
+    const isLightBg = bg.toLowerCase() === '#ffffff' || bg.toLowerCase() === '#f8fafc';
+
+    return {
+      '--bg-primary': bg,
+      '--bg-card': isLightBg ? 'rgba(255, 255, 255, 0.85)' : hexToRgba(bg, 0.85),
+      '--bg-card-hover': isLightBg ? 'rgba(241, 245, 249, 0.95)' : hexToRgba(accent, 0.15),
+      '--border-color': hexToRgba(accent, 0.25),
+      '--text-heading': isLightBg ? '#0f172a' : '#f8fafc',
+      '--text-body': isLightBg ? '#334155' : '#cbd5e1',
+      '--text-muted': isLightBg ? '#64748b' : '#94a3b8',
+      '--accent': accent,
+      '--accent-glow': hexToRgba(accent, 0.35),
+      '--nav-bg': isLightBg ? 'rgba(248, 250, 252, 0.9)' : hexToRgba(bg, 0.9),
+    };
+  };
+
   return (
-    <div className={`min-h-screen bg-[var(--bg-primary)] text-[var(--text-body)] relative overflow-x-hidden transition-colors duration-300 ${getThemeClass()}`}>
+    <div 
+      className={`min-h-screen bg-[var(--bg-primary)] text-[var(--text-body)] relative overflow-x-hidden transition-colors duration-300 ${getThemeClass()}`}
+      style={getCustomStyle()}
+    >
       
       {/* Brittany Chiang Mouse Spotlight Glow */}
       <div 
@@ -55,6 +96,8 @@ export default function App() {
             setActiveTab={setActiveTab} 
             currentTheme={theme}
             setTheme={setTheme}
+            customPalette={customPalette}
+            setCustomPalette={setCustomPalette}
           />
 
           {/* Main View Container */}
