@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a192f;
+  --bg-card: rgba(17, 34, 64, 0.7);
+  --bg-card-hover: rgba(23, 42, 69, 0.9);
+  --border-color: rgba(100, 255, 218, 0.15);
+  --text-heading: #e6f1ff;
+  --text-body: #8892b0;
+  --text-muted: #4a5668;
+  --accent: #64ffda;
+  --accent-glow: rgba(100, 255, 218, 0.3);
+  --nav-bg: rgba(10, 25, 47, 0.85);
+}
+
+/* Light Theme */
+.theme-light {
+  --bg-primary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(241, 245, 249, 1);
+  --border-color: rgba(79, 70, 229, 0.2);
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --accent: #4f46e5;
+  --accent-glow: rgba(79, 70, 229, 0.25);
+  --nav-bg: rgba(248, 250, 252, 0.9);
+}
+
+/* Crimson / Red Theme */
+.theme-crimson {
+  --bg-primary: #12070a;
+  --bg-card: rgba(28, 12, 18, 0.8);
+  --bg-card-hover: rgba(42, 18, 26, 0.95);
+  --border-color: rgba(255, 42, 95, 0.25);
+  --text-heading: #fff0f3;
+  --text-body: #c49ba6;
+  --text-muted: #73505a;
+  --accent: #ff2a5f;
+  --accent-glow: rgba(255, 42, 95, 0.35);
+  --nav-bg: rgba(18, 7, 10, 0.9);
+}
+
+/* Emerald / Matrix Theme */
+.theme-emerald {
+  --bg-primary: #06140e;
+  --bg-card: rgba(12, 33, 24, 0.8);
+  --bg-card-hover: rgba(18, 48, 35, 0.95);
+  --border-color: rgba(16, 185, 129, 0.25);
+  --text-heading: #ecfdf5;
+  --text-body: #86efac;
+  --text-muted: #34d399;
+  --accent: #10b981;
+  --accent-glow: rgba(16, 185, 129, 0.35);
+  --nav-bg: rgba(6, 20, 14, 0.9);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-body);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+}
+
+/* Glassmorphism Panel using dynamic CSS vars */
+.theme-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+}
+
+.theme-accent-text {
+  color: var(--accent);
+}
+
+.theme-heading-text {
+  color: var(--text-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
