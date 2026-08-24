@@ -184,13 +184,9 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
   return (
     <div className="space-y-24 pt-24 pb-16">
       
-      {/* HERO SECTION */}
       <section className="relative min-h-[70vh] flex flex-col justify-center items-center text-center px-4 overflow-hidden">
-        
-        {/* Glow ambient background graphics */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[var(--accent)]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-        {/* Live Status Pill */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -202,7 +198,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
           <span className="font-semibold text-[var(--accent)]">AVAILABLE FOR HIGH-IMPACT ROLES & BUILD CONTRACTS</span>
         </motion.div>
 
-        {/* Big Name Banner - Brittany Chiang Style */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -226,7 +221,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
           </p>
         </motion.div>
 
-        {/* Call to Actions */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -251,7 +245,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
           </button>
         </motion.div>
 
-        {/* Sub-hero tech highlights with proper icons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl w-full">
           {[
             { label: 'Solana Web3', sub: 'Native Blinks / Actions', icon: Boxes },
@@ -276,7 +269,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
 
       </section>
 
-      {/* TECH STACK SECTION */}
       <section id="techstack" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] text-xs font-mono text-[var(--accent)]">
@@ -329,7 +321,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
         </div>
       </section>
 
-      {/* FEATURED PROJECTS SECTION WITH IMAGE PREVIEWS */}
       <section id="projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--border-color)] pb-6">
           <div>
@@ -351,7 +342,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
           </div>
         </div>
 
-        {/* Projects Cards Grid with Screenshots */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
             <motion.div
@@ -361,7 +351,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
               className="theme-card rounded-2xl overflow-hidden flex flex-col justify-between group shadow-xl"
             >
               <div>
-                {/* Project Screenshot Preview Image */}
                 <div className="h-48 relative overflow-hidden bg-slate-900 border-b border-[var(--border-color)]">
                   <img
                     src={project.image}
@@ -370,7 +359,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] via-transparent to-transparent opacity-80" />
 
-                  {/* Top Bar inside image card */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
                     <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-950/80 text-[var(--accent)] border border-[var(--border-color)] backdrop-blur-md">
                       {project.category}
@@ -383,7 +371,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
                   </div>
                 </div>
 
-                {/* Card Content */}
                 <div className="p-6 space-y-3">
                   <div>
                     <h3 className="font-pixel text-lg text-[var(--text-heading)] group-hover:text-[var(--accent)] transition-colors">
@@ -398,7 +385,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
                     {project.description}
                   </p>
 
-                  {/* Tech Tags */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {project.tags.map((tag, idx) => (
                       <span 
@@ -412,7 +398,6 @@ export default function DeveloperHub({ onSwitchToManhwa }) {
                 </div>
               </div>
 
-              {/* Card Footer Actions */}
               <div className="p-6 pt-0 border-t border-[var(--border-color)] mt-4 flex items-center justify-between gap-2">
                 <a
                   href={project.url}

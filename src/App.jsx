@@ -8,15 +8,14 @@ import Footer from './components/Footer';
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false);
-  const [activeTab, setActiveTab] = useState('dev'); // 'dev' | 'manhwa'
-  const [theme, setTheme] = useState('dark'); // 'dark' | 'light' | 'crimson' | 'emerald' | 'custom'
+  const [activeTab, setActiveTab] = useState('dev');
+  const [theme, setTheme] = useState('dark');
   const [customPalette, setCustomPalette] = useState({
     accent: '#a855f7',
     bg: '#0f0715'
   });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Handle Mouse Spotlight Effect (Brittany Chiang style)
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -73,8 +72,6 @@ export default function App() {
       className={`min-h-screen bg-[var(--bg-primary)] text-[var(--text-body)] relative overflow-x-hidden transition-colors duration-300 ${getThemeClass()}`}
       style={getCustomStyle()}
     >
-      
-      {/* Brittany Chiang Mouse Spotlight Glow */}
       <div 
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
         style={{
@@ -82,15 +79,12 @@ export default function App() {
         }}
       />
 
-      {/* Humorous Intro Splash Loader */}
       {!introComplete && (
         <IntroLoader onComplete={() => setIntroComplete(true)} />
       )}
 
-      {/* Main Portfolio Content */}
       {introComplete && (
         <div className="animate-fadeIn">
-          {/* Navigation Bar */}
           <Navbar 
             activeTab={activeTab} 
             setActiveTab={setActiveTab} 
@@ -100,7 +94,6 @@ export default function App() {
             setCustomPalette={setCustomPalette}
           />
 
-          {/* Main View Container */}
           <main>
             {activeTab === 'dev' ? (
               <DeveloperHub 
@@ -113,11 +106,9 @@ export default function App() {
               <ManhwaHub />
             )}
 
-            {/* Global Contact Section */}
             <ContactSection />
           </main>
 
-          {/* Footer */}
           <Footer />
         </div>
       )}

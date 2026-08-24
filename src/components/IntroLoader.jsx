@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, CheckCircle2, Lock, Sparkles, Terminal } from 'lucide-react';
+import { CheckCircle2, Lock, Sparkles, Terminal } from 'lucide-react';
 
 export default function IntroLoader({ onComplete }) {
   const [step, setStep] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    // Step 1: Auto check captcha after 700ms
     const checkTimer = setTimeout(() => {
       setIsChecked(true);
     }, 700);
 
-    // Transition to Step 2 ("Haha just kidding") at 2.0s
     const step2Timer = setTimeout(() => {
       setStep(2);
     }, 2000);
 
-    // Transition to Step 3 (unveil portfolio) at 3.2s
     const step3Timer = setTimeout(() => {
       setStep(3);
       if (onComplete) onComplete();
@@ -30,11 +27,6 @@ export default function IntroLoader({ onComplete }) {
     };
   }, [onComplete]);
 
-  const handleSkip = () => {
-    setStep(3);
-    if (onComplete) onComplete();
-  };
-
   if (step === 3) return null;
 
   return (
@@ -46,15 +38,6 @@ export default function IntroLoader({ onComplete }) {
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--bg-primary)] text-[var(--text-heading)] backdrop-blur-xl"
       >
-        {/* Skip button */}
-        <button
-          onClick={handleSkip}
-          className="absolute top-6 right-6 px-4 py-2 text-xs font-mono tracking-wider bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-[var(--accent)] border border-slate-800 rounded-full transition-all duration-200 z-50 flex items-center gap-2"
-        >
-          <span>SKIP INTRO</span>
-          <span className="text-[var(--accent)]">[ESC]</span>
-        </button>
-
         {step === 1 && (
           <motion.div
             key="captcha-card"
@@ -64,15 +47,7 @@ export default function IntroLoader({ onComplete }) {
             transition={{ duration: 0.3 }}
             className="w-full max-w-sm p-6 theme-card rounded-2xl shadow-2xl border border-[var(--border-color)]"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800/80">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[var(--accent)]" />
-                <span className="font-pixel text-xs text-[var(--accent)] tracking-wider">SECURITY GATEWAY</span>
-              </div>
-              <span className="text-[10px] font-mono text-[var(--text-muted)]">v2.4.0</span>
-            </div>
-
-            <div className="my-6 p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 flex items-center justify-between">
+            <div className="my-2 p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div
                   onClick={() => setIsChecked(true)}

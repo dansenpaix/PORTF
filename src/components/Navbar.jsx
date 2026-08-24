@@ -34,11 +34,11 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
   }, []);
 
   const themes = [
-    { id: 'dark', label: 'Midnight Navy (Dark)', icon: Moon, color: 'bg-[#0a192f] text-[#64ffda]' },
-    { id: 'light', label: 'Clean Slate (Light)', icon: Sun, color: 'bg-[#f8fafc] text-[#4f46e5]' },
-    { id: 'crimson', label: 'Cyber Crimson (Red)', icon: Flame, color: 'bg-[#12070a] text-[#ff2a5f]' },
-    { id: 'emerald', label: 'Matrix Emerald (Green)', icon: Zap, color: 'bg-[#06140e] text-[#10b981]' },
-    { id: 'custom', label: 'Custom Palette (Color Picker)', icon: Sliders, color: 'bg-[#0f0715] text-[#a855f7]' },
+    { id: 'dark', label: 'Midnight Navy (Dark)', icon: Moon },
+    { id: 'light', label: 'Clean Slate (Light)', icon: Sun },
+    { id: 'crimson', label: 'Cyber Crimson (Red)', icon: Flame },
+    { id: 'emerald', label: 'Matrix Emerald (Green)', icon: Zap },
+    { id: 'custom', label: 'Custom Palette (Color Picker)', icon: Sliders },
   ];
 
   const presetSwatches = [
@@ -76,7 +76,6 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Logo */}
           <div 
             onClick={() => { setActiveTab('dev'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-2 cursor-pointer group"
@@ -89,7 +88,6 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
             </span>
           </div>
 
-          {/* Navigation Tabs (Desktop) */}
           <nav className="hidden md:flex items-center p-1.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] backdrop-blur-md">
             <button
               onClick={() => { setActiveTab('dev'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
@@ -132,22 +130,20 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
             </button>
           </nav>
 
-          {/* Right Actions: Theme Selector & Social Icons */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Theme Dropdown Button */}
             <div className="relative">
               <button
                 onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
-                className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all flex items-center gap-2 text-xs font-mono"
+                className="p-2 sm:px-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all flex items-center gap-1.5 sm:gap-2 text-xs font-mono"
                 title="Change Color Theme"
               >
                 <Palette className="w-4 h-4 text-[var(--accent)]" />
-                <span className="capitalize">{currentTheme}</span>
+                <span className="capitalize hidden sm:inline">{currentTheme}</span>
               </button>
 
               {themeDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 p-3 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xl backdrop-blur-xl z-50 space-y-3">
+                <div className="absolute right-0 mt-2 w-64 max-w-[90vw] p-3 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-2xl backdrop-blur-xl z-50 space-y-3">
                   <div className="px-1 text-[10px] font-mono text-[var(--text-muted)] border-b border-[var(--border-color)] pb-1.5 font-bold tracking-wider">
                     SELECT THEME PALETTE
                   </div>
@@ -174,7 +170,6 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
                     })}
                   </div>
 
-                  {/* Custom Palette Customizer Controls */}
                   {currentTheme === 'custom' && (
                     <div className="pt-2 border-t border-[var(--border-color)] space-y-2.5">
                       <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
@@ -184,7 +179,6 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
                         </span>
                       </div>
 
-                      {/* Preset Swatches */}
                       <div className="flex items-center justify-between gap-1.5 p-1.5 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
                         {presetSwatches.map((swatch) => (
                           <button
@@ -197,7 +191,6 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
                         ))}
                       </div>
 
-                      {/* Accent Color Input */}
                       <div className="flex items-center justify-between p-2 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono">
                         <span className="text-[var(--text-body)]">Accent Color:</span>
                         <div className="flex items-center gap-2">
@@ -219,8 +212,7 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
               )}
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-1.5">
+            <div className="hidden lg:flex items-center gap-1.5">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -238,35 +230,22 @@ export default function Navbar({ activeTab, setActiveTab, currentTheme, setTheme
                 );
               })}
             </div>
-          </div>
 
-          {/* Mobile Menu & Theme Toggle Buttons */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={() => {
-                const themeOrder = ['dark', 'light', 'crimson', 'emerald', 'custom'];
-                const nextIndex = (themeOrder.indexOf(currentTheme) + 1) % themeOrder.length;
-                setTheme(themeOrder[nextIndex]);
-              }}
-              className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--accent)]"
-              title="Cycle Theme"
-            >
-              <Palette className="w-5 h-5" />
-            </button>
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)]"
+                aria-label="Toggle Navigation Menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
 
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-heading)]"
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
 
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden mt-3 px-4 pt-2 pb-6 bg-[var(--bg-card)] border-b border-[var(--border-color)] backdrop-blur-xl space-y-3">
           <div className="flex flex-col gap-2">
